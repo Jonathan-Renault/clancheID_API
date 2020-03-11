@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+/**
+ * @swagger
+ *  schema:
+ *      schema: user
+ */
 const userSchema = mongoose.Schema({
     email: {
         type: String,

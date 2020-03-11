@@ -26,16 +26,12 @@ const swaggerOptions = {
             servers : ["http://localhost:3000"]
         }
     },
-    authAction : {
-        JWT : {
-            name : "JWT",
-            schema: {
-                type: "apiKey",
-                in: "header",
-                name: "Authorization",
-                description: ""
-            },
-            value: "Bearer <eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvbkBqb24uZnIiLCJ1c2VySWQiOiI1ZTVjY2IxZTk4ODRiYTE4OGNiNzMyZjciLCJpYXQiOjE1ODM0MTUyNTEsImV4cCI6MTU4MzQ1MTI1MX0.9mT0vdTPf9rWgmwJIoEBHk5ydKj0HrDLD_OrhaRLdSo>"
+    securityDefinitions: {
+        bearerAuth: {
+            type: "apiKey",
+            name: "Authorization",
+            scheme: 'bearer',
+            in: "header"
         }
     },
     apis: ["app.js"]
@@ -43,7 +39,6 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
 
 mongoose.connect(
     "mongodb+srv://" +
@@ -80,6 +75,22 @@ app.use((req, res, next) => {
 // Routes which should handle requests
 /**
  * @swagger
+ * /user/login:
+ *  post:
+ *      description: Connection to the application
+ *      parameters:
+ *          -   name: email
+ *              in: path
+ *              required: true
+ *          -   name: password
+ *              in: path
+ *              required: true
+ *      tags: ['Auth']
+ *      security:
+ *           bearerAuth: []
+ *      responses:
+ *          '200':
+ *              description: A successful response
  * /user/signup:
  *  post:
  *      description: Sign-up to the application
@@ -108,20 +119,8 @@ app.use((req, res, next) => {
  *          -   name: created_at
  *              in: path
  *      tags: ['user']
- *      responses:
- *          '200':
- *              description: A successful response
- * /user/login:
- *  post:
- *      description: Connection to the application
- *      parameters:
- *          -   name: email
- *              in: path
- *              required: true
- *          -   name: password
- *              in: path
- *              required: true
- *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -133,6 +132,8 @@ app.use((req, res, next) => {
  *              in: query
  *              required: true
  *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -144,6 +145,8 @@ app.use((req, res, next) => {
  *              in: query
  *              required: true
  *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -155,6 +158,8 @@ app.use((req, res, next) => {
  *              in: query
  *              required: true
  *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -186,6 +191,8 @@ app.use((req, res, next) => {
  *          -   name: updated_at
  *              in: path
  *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -197,6 +204,8 @@ app.use((req, res, next) => {
  *              in: query
  *              required: true
  *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -208,6 +217,8 @@ app.use((req, res, next) => {
  *              in: query
  *              required: true
  *      tags: ['user']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -229,6 +240,8 @@ app.use("/user", userRoutes);
  *          -   name: created_at
  *              in: path
  *      tags: ['log']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -245,6 +258,8 @@ app.use("/user", userRoutes);
  *          -   name: created_at
  *              in: path
  *      tags: ['log']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -266,6 +281,8 @@ app.use("/log", logRoutes);
  *          -   name: created_at
  *              in: path
  *      tags: ['qrcode']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -284,6 +301,8 @@ app.use("/log", logRoutes);
  *          -   name: created_at
  *              in: path
  *      tags: ['qrcode']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -291,6 +310,8 @@ app.use("/log", logRoutes);
  *  delete:
  *      description: Delete all QR code
  *      tags: ['qrcode']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -302,6 +323,8 @@ app.use("/log", logRoutes);
  *              in: query
  *              required: true
  *      tags: ['qrcode']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -313,6 +336,8 @@ app.use("/log", logRoutes);
  *              in: query
  *              required: true
  *      tags: ['qrcode']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -329,6 +354,8 @@ app.use("/qrcode", qrcodeRoutes);
  *              in: query
  *              required: true
  *      tags: ['file']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -352,6 +379,8 @@ app.use("/qrcode", qrcodeRoutes);
  *          -   name: file
  *              in: path
  *      tags: ['file']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -365,6 +394,8 @@ app.use("/qrcode", qrcodeRoutes);
  *          -   name: file
  *              in: path
  *      tags: ['file']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -378,6 +409,8 @@ app.use("/qrcode", qrcodeRoutes);
  *          -   name: file
  *              in: path
  *      tags: ['file']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -391,6 +424,8 @@ app.use("/qrcode", qrcodeRoutes);
  *          -   name: file
  *              in: path
  *      tags: ['file']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
@@ -403,6 +438,8 @@ app.use("/file", fileRoutes);
  *  get:
  *      description: The request of the admin
  *      tags: ['admin']
+ *      security:
+ *           bearerAuth: []
  *      responses:
  *          '200':
  *              description: A successful response
