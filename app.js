@@ -17,21 +17,25 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
-            version : "1.0.0",
+            version : "1.2.0",
             title : "Swagger ClencheID",
             description : "ClencheID documentation",
             contact : {
                 name : "Dedeve"
             },
             servers : ["http://localhost:3000"]
-        }
-    },
-    securityDefinitions: {
+        },
         bearerAuth: {
-            type: "apiKey",
-            name: "Authorization",
-            scheme: 'bearer',
-            in: "header"
+            JWT: {
+                schema: {
+                    type: "apiKey",
+                    name: "Authorization",
+                    description: "Put the authorization key",
+                    in: "header"
+                }
+            },
+            value: "Bearer <eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvbkBqb24uZnIiLCJ1c2VySWQiOiI1ZTVjY2IxZTk4ODRiYTE4OGNiNzMyZjciLCJpYXQiOjE1ODM5MzkxODQsImV4cCI6MTU4Mzk3NTE4NH0.Elpcsip6vRSeTkdEU7FSylDnAtmRxuHsrdZvEIo7i24>"
+
         }
     },
     apis: ["app.js"]
